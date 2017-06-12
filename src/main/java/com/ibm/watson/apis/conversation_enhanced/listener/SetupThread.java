@@ -77,17 +77,10 @@ public class SetupThread extends Thread {
       username = creds.getUsername();
       password = creds.getPassword();
 
-      RANKER_ID = System.getenv("RANKER_ID"); //$NON-NLS-1$
-      System.out.println("**** RANKERID: "+ RANKER_ID);
-      
-      System.out.println("User: "+username+ " - pass: "+password); //$NON-NLS-1$
       System.out.println(Messages.getString("SetupThread.CREATE_RNR_SERVICE")); //$NON-NLS-1$
       
       RetrieveAndRank service = new RetrieveAndRank();
       service.setUsernameAndPassword(username, password);
-
-      System.out.println(service); //$NON-NLS-1$
-      System.out.println(isAlreadySetup(service)); //$NON-NLS-1$
       
       
       if (isAlreadySetup(service)) {
@@ -95,7 +88,6 @@ public class SetupThread extends Thread {
         updateConfigObject("1",Constants.NOT_READY, Messages.getString("SetupThread.STEP_1_OF_2"), Messages.getString("SetupThread.CLUSTER_ALREADY_SETUP")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
         RANKER_ID = System.getenv("RANKER_ID"); //$NON-NLS-1$
-        System.out.println("**** RANKERID: "+ RANKER_ID);
         if (RANKER_ID == null) {
           // If the user has not specifically set a ranker in the ENV, detect a ranker. We
           // return the first discovered ranker, which in our deploy story is the one we created
