@@ -77,6 +77,9 @@ public class SetupThread extends Thread {
       username = creds.getUsername();
       password = creds.getPassword();
 
+      RANKER_ID = System.getenv("RANKER_ID"); //$NON-NLS-1$
+      System.out.println("**** RANKERID: "+ RANKER_ID);
+      
       System.out.println(Messages.getString("SetupThread.CREATE_RNR_SERVICE")); //$NON-NLS-1$
       RetrieveAndRank service = new RetrieveAndRank();
       service.setUsernameAndPassword(username, password);
