@@ -41,5 +41,5 @@ public class Constants {
   public static final String READY = "ready";
   public static final String NOT_READY = "not_ready";
   
-  public static final String WORKSPACE_ID = "f7b2d4b5-62b5-4019-a1f5-c3eb78136db0";
+  public static final String WORKSPACE_ID = "WORKSPACE_ID";
 }
