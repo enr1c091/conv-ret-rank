@@ -68,7 +68,7 @@ public class SetupThread extends Thread {
     try {
       logger.info(Messages.getString("SetupThread.GET_CREDENTIALS")); //$NON-NLS-1$
       ServiceCredentials creds = CredentialUtils.getUserNameAndPassword("retrieve_and_rank");
-      
+      System.out.println("****CONFIGURANDO THREAD****");
       updateConfigObject("0",Constants.NOT_READY, Messages.getString("SetupThread.STEP_1_OF_2"), Messages.getString("SetupThread.GETTING_CREDENTIALS")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
       
       if (creds == null) {
