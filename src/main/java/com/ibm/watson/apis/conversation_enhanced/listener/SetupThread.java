@@ -80,10 +80,16 @@ public class SetupThread extends Thread {
       RANKER_ID = System.getenv("RANKER_ID"); //$NON-NLS-1$
       System.out.println("**** RANKERID: "+ RANKER_ID);
       
+      System.out.println("User: "+username+ " - pass: "+password); //$NON-NLS-1$
       System.out.println(Messages.getString("SetupThread.CREATE_RNR_SERVICE")); //$NON-NLS-1$
+      
       RetrieveAndRank service = new RetrieveAndRank();
       service.setUsernameAndPassword(username, password);
 
+      System.out.println(service); //$NON-NLS-1$
+      System.out.println(isAlreadySetup(service)); //$NON-NLS-1$
+      
+      
       if (isAlreadySetup(service)) {
         logger.info(Messages.getString("SetupThread.CLUSTER_ALREADY_SETUP")); //$NON-NLS-1$
         updateConfigObject("1",Constants.NOT_READY, Messages.getString("SetupThread.STEP_1_OF_2"), Messages.getString("SetupThread.CLUSTER_ALREADY_SETUP")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
