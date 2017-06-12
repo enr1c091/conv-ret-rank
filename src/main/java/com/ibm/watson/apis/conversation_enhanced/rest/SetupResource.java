@@ -48,6 +48,7 @@ public class SetupResource {
   @GET @Produces(MediaType.APPLICATION_JSON) public Response getConfig() {
     String workspace_id = System.getenv(Constants.WORKSPACE_ID); //$NON-NLS-1$
     logger.debug(MessageFormat.format(Messages.getString("SetupResource.WORKSPACE_ID_IS"), workspace_id));
+    System.out.println("Workspace ID: "+workspace_id);
 
     JsonObject config = new JsonObject();
     config.addProperty(Constants.SETUP_STATUS_MESSAGE, Messages.getString("SetupResource.SETUP_STATUS_MSG")); //$NON-NLS-1$ //$NON-NLS-2$

@@ -1,18 +1,18 @@
 ---
 declared-services:
-  retrieve-and-rank-service:
+  ret-rank-hyperm:
     label: retrieve_and_rank
     plan: standard
-  document-conversion-service:
+  doc-conv-hyperm:
     label: document_conversion
     plan: standard
-  conversation-service:
+  conversation-hyperm:
     label: conversation
     plan: free
 applications:
 - services:
-  - retrieve-and-rank-service
-  - document-conversion-service
-  - conversation-service
+  - ret-rank-hyperm
+  - doc-conv-hyperm
+  - conversation-hyperm
   path: build/libs/conversation-enhanced-0.1-SNAPSHOT.war
   memory: 512M

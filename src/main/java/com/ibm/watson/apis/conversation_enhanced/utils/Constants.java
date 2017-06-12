@@ -27,10 +27,10 @@ public class Constants {
   public static final Integer RESULTS_TO_FETCH = 5;
   
   // Retrieve and Rank Fields
-  public static final String COLLECTION_NAME = "car_collection";
+  public static final String COLLECTION_NAME = "engov-collection";
   public static final String CONFIGURATION_NAME = "car_config";
-  public static final String CLUSTER_NAME = "car_cluster";
-  public static final String RANKER_NAME = "ranker-CarManual";
+  public static final String CLUSTER_NAME = "Hyperm-cluster";
+  public static final String RANKER_NAME = "ret-rank-hyperm";
   
   // Setup config JSON object Fields
   public static final String SETUP_STEP = "setup_step";
@@ -41,5 +41,5 @@ public class Constants {
   public static final String READY = "ready";
   public static final String NOT_READY = "not_ready";
   
-  public static final String WORKSPACE_ID = "WORKSPACE_ID";
+  public static final String WORKSPACE_ID = "7b2d4b5-62b5-4019-a1f5-c3eb78136db0";
 }
