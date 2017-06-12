@@ -92,7 +92,7 @@ public class SetupThread extends Thread {
           if (service.getRankers().execute().getRankers().size() > 0) {
             RANKER_ID = service.getRankers().execute().getRankers().get(0).getId();
           }
-          
+          System.out.println("**** RANKERID: "+ RANKER_ID);
           // If no ranker is detected at this point, create one
           if (RANKER_ID == null || RANKER_ID.isEmpty()) {
             logger.info(Messages.getString("SetupThread.CLUSTER_NO_RANKER")); //$NON-NLS-1$
@@ -134,6 +134,7 @@ public class SetupThread extends Thread {
       updateConfigObject("3",Constants.READY, Messages.getString("SetupThread.EMPTY"), Messages.getString("SetupThread.EMPTY")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
       
     } catch (Exception e) {
+	System.out.println("**** ERROR: "+ Messages.getString("SetupThread.ERROR_COLLECTION_INIT") + e.getMessage());
       logger.error(Messages.getString("SetupThread.ERROR_COLLECTION_INIT") + e.getMessage()); //$NON-NLS-1$
       if(e instanceof UnauthorizedException){
         updateConfigObject("0", Constants.NOT_READY, Messages.getString("SetupThread.ERROR"), //$NON-NLS-1$ //$NON-NLS-2$
