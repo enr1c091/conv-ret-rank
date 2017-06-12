@@ -24,7 +24,7 @@ public class Constants {
   public static final String SCHEMA_FIELD_CONFIDENCE = "ranker.confidence";
   
   // Number of results to fetch in Query
-  public static final Integer RESULTS_TO_FETCH = 5;
+  public static final Integer RESULTS_TO_FETCH = 3;
   
   // Retrieve and Rank Fields
   public static final String COLLECTION_NAME = "engov-collection";
