@@ -66,7 +66,7 @@ public class SetupThread extends Thread {
     String password = ""; //$NON-NLS-1$
 
     try {
-      logger.info(Messages.getString("SetupThread.GET_CREDENTIALS")); //$NON-NLS-1$
+    	System.out.println(Messages.getString("SetupThread.GET_CREDENTIALS")); //$NON-NLS-1$
       ServiceCredentials creds = CredentialUtils.getUserNameAndPassword("retrieve_and_rank");
       System.out.println("****CONFIGURANDO THREAD****");
       updateConfigObject("0",Constants.NOT_READY, Messages.getString("SetupThread.STEP_1_OF_2"), Messages.getString("SetupThread.GETTING_CREDENTIALS")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
@@ -77,7 +77,7 @@ public class SetupThread extends Thread {
       username = creds.getUsername();
       password = creds.getPassword();
 
-      logger.info(Messages.getString("SetupThread.CREATE_RNR_SERVICE")); //$NON-NLS-1$
+      System.out.println(Messages.getString("SetupThread.CREATE_RNR_SERVICE")); //$NON-NLS-1$
       RetrieveAndRank service = new RetrieveAndRank();
       service.setUsernameAndPassword(username, password);
 
@@ -86,18 +86,19 @@ public class SetupThread extends Thread {
         updateConfigObject("1",Constants.NOT_READY, Messages.getString("SetupThread.STEP_1_OF_2"), Messages.getString("SetupThread.CLUSTER_ALREADY_SETUP")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
         RANKER_ID = System.getenv("RANKER_ID"); //$NON-NLS-1$
+        System.out.println("**** RANKERID: "+ RANKER_ID);
         if (RANKER_ID == null) {
           // If the user has not specifically set a ranker in the ENV, detect a ranker. We
           // return the first discovered ranker, which in our deploy story is the one we created
           if (service.getRankers().execute().getRankers().size() > 0) {
             RANKER_ID = service.getRankers().execute().getRankers().get(0).getId();
           }
-          System.out.println("**** RANKERID: "+ RANKER_ID);
+          
           // If no ranker is detected at this point, create one
           if (RANKER_ID == null || RANKER_ID.isEmpty()) {
-            logger.info(Messages.getString("SetupThread.CLUSTER_NO_RANKER")); //$NON-NLS-1$
+        	  System.out.println(Messages.getString("SetupThread.CLUSTER_NO_RANKER")); //$NON-NLS-1$
 
-            logger.info(Messages.getString("SetupThread.CREATE_RANKER")); //$NON-NLS-1$
+        	  System.out.println(Messages.getString("SetupThread.CREATE_RANKER")); //$NON-NLS-1$
             updateConfigObject("2",Constants.NOT_READY, Messages.getString("SetupThread.STEP_2_OF_2"), Messages.getString("SetupThread.CREATING_RANKER")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             createRanker(service);
             updateConfigObject("3",Constants.READY, Messages.getString("SetupThread.EMPTY"), Messages.getString("SetupThread.EMPTY")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
@@ -105,37 +106,38 @@ public class SetupThread extends Thread {
           }
         }
         
-        logger.info(Messages.getString("SetupThread.SETUP_ALREADY_COMPLETE")); //$NON-NLS-1$
+        System.out.println(Messages.getString("SetupThread.SETUP_ALREADY_COMPLETE")); //$NON-NLS-1$
         updateConfigObject("3",Constants.READY, Messages.getString("SetupThread.EMPTY"), Messages.getString("SetupThread.EMPTY")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
         return;
       }
 
+      
       // If we get here this is a new retrieve and ranker service with no artifacts, start by creating the SOLR cluster
-      logger.info(Messages.getString("SetupThread.CREATE_CLUSTER")); //$NON-NLS-1$
+      System.out.println(Messages.getString("SetupThread.CREATE_CLUSTER")); //$NON-NLS-1$
       updateConfigObject("1",Constants.NOT_READY, Messages.getString("SetupThread.STEP_1_OF_2"), Messages.getString("SetupThread.CREATING_CLUSTER")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
       SolrCluster cluster = createCluster(service);
       
-      logger.info(Messages.getString("SetupThread.UPLOADING_CONFIGURATION")); //$NON-NLS-1$
+      System.out.println(Messages.getString("SetupThread.UPLOADING_CONFIGURATION")); //$NON-NLS-1$
       uploadConfiguration(service, cluster);
       
-      logger.info(Messages.getString("SetupThread.CREATE_COLLECTION")); //$NON-NLS-1$
+      System.out.println(Messages.getString("SetupThread.CREATE_COLLECTION")); //$NON-NLS-1$
       HttpSolrClient solrClient = HttpSolrClientUtils.getSolrClient(service.getSolrUrl(cluster.getId()), username, password);
       createCollection(solrClient);
       
-      logger.info(Messages.getString("SetupThread.INDEX_DOCUMENTS")); //$NON-NLS-1$
+      System.out.println(Messages.getString("SetupThread.INDEX_DOCUMENTS")); //$NON-NLS-1$
       indexDocuments(solrClient);
 
-      logger.info(Messages.getString("SetupThread.CREATE_RANKER")); //$NON-NLS-1$
+      System.out.println(Messages.getString("SetupThread.CREATE_RANKER")); //$NON-NLS-1$
       updateConfigObject("2",Constants.NOT_READY, Messages.getString("SetupThread.STEP_2_OF_2"), Messages.getString("SetupThread.CREATING_RANKER")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
       createRanker(service);
       
-      logger.info(Messages.getString("SetupThread.SETUP_COMPLETE")); //$NON-NLS-1$
+      System.out.println(Messages.getString("SetupThread.SETUP_COMPLETE")); //$NON-NLS-1$
       updateConfigObject("3",Constants.READY, Messages.getString("SetupThread.EMPTY"), Messages.getString("SetupThread.EMPTY")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
       
     } catch (Exception e) {
 	System.out.println("**** ERROR: "+ Messages.getString("SetupThread.ERROR_COLLECTION_INIT") + e.getMessage());
-      logger.error(Messages.getString("SetupThread.ERROR_COLLECTION_INIT") + e.getMessage()); //$NON-NLS-1$
+	System.out.println(Messages.getString("SetupThread.ERROR_COLLECTION_INIT") + e.getMessage()); //$NON-NLS-1$
       if(e instanceof UnauthorizedException){
         updateConfigObject("0", Constants.NOT_READY, Messages.getString("SetupThread.ERROR"), //$NON-NLS-1$ //$NON-NLS-2$
             Messages.getString("SetupThread.INVALID_CREDS")); //$NON-NLS-1$ //$NON-NLS-4$
@@ -168,6 +170,7 @@ public class SetupThread extends Thread {
   private void indexDocuments(HttpSolrClient solrClient) {
     URL url = this.getClass().getClassLoader().getResource("file4.json"); //$NON-NLS-1$
     File dataFile = null;
+    System.out.println("*****INGESTING DOCUMENTS*****");
     try {
       dataFile = new File(url.toURI());
     } catch (Exception e) {
