@@ -42,6 +42,11 @@ import com.ibm.watson.apis.conversation_enhanced.utils.Messages;
 import com.ibm.watson.developer_cloud.conversation.v1_experimental.ConversationService;
 import com.ibm.watson.developer_cloud.conversation.v1_experimental.model.MessageRequest;
 import com.ibm.watson.developer_cloud.conversation.v1_experimental.model.MessageResponse;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.AnalysisResults;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.AnalyzeOptions;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.EntitiesOptions;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.Features;
 import com.ibm.watson.developer_cloud.service.exception.UnauthorizedException;
 import com.ibm.watson.developer_cloud.util.GsonSingleton;
 
@@ -148,12 +153,26 @@ public class ProxyResource {
         output.put("CEPayload", docs); //$NON-NLS-1$
       }
     }
+    //Colocar else para chamar NLU
 
     // Log User input and output from Watson
     if (Boolean.TRUE.equals(LOGGING_ENABLED)) {
       logResponse(response);
     }
 
+    
+    
+    NaturalLanguageUnderstanding nluService = new NaturalLanguageUnderstanding(
+    	  NaturalLanguageUnderstanding.VERSION_DATE_2017_02_27,
+    	  System.getenv("NLU_USERNAME"),
+    	  System.getenv("NLU_PASSWORD")
+    );
+
+    EntitiesOptions entities = new EntitiesOptions.Builder().sentiment(true).limit(1).build();
+   	Features features = new Features.Builder().entities(entities).build();
+   	AnalyzeOptions parameters = new AnalyzeOptions.Builder().text(request.inputText()).features(features).build();
+   	AnalysisResults results = nluService.analyze(parameters).execute();
+    
     return response;
   }
 
