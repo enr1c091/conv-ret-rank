@@ -34,17 +34,13 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     if (this.doc) {
                         return this.doc.title;
                     }
-                    return 'bula_engov.pdf';
+                    return '';
                 };
                 CeDocComponent.prototype.getSourceUrl = function () {
-                    console.log(this.doc);
-                    return '';
-                    /*
                     if (this.doc) {
-                      return this.doc.sourceUrl;
+                        return 'bula_engov.pdf';
                     }
                     return '';
-                     * */
                 };
                 /*
                  * Displays the Solr highlighted text with a special style.
@@ -65,7 +61,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     core_1.Component({
                         inputs: ['doc', 'body'],
                         selector: 'ce-doc',
-                        template: "\n  <div>\n      <div title='View detailed Content' (click)='toggle(!isExpand)' class='docBody'>\n        <div class='docBodyTitle' [innerHtml]='getTitle()'></div>\n        <div class='docBodySnippet' [innerHtml]='getHighlighting()'></div>\n      </div>\n      <div class ='modal' [hidden]='isExpand'>\n      <div class='modal-header'><div [innerHtml]='getTitle()' class='modal-doc'></div>\n        <span class='modal-close' (click)='toggle(!isExpand)'>\n        <img src='../img/close-button.png' class='close-button'></span>\n      </div>\n      <div class='modalDocTitle'>\n        <a title='View content file' target='_blank' class='docLink' [href]='getSourceUrl()'>\n          <div class='titleText'>Leia a bula completa aqui</div>\n        </a>\n      </div>\n      <div class='bodyText' [innerHtml]='getBody()'></div>\n      <div class='disclaimer'>We\u2019re demonstrating text limiting using only two paragraphs of the full article.\n       You can turn this off for your own application.</div>\n    </div>\n    <div class='docTitle'>\n      <a title='View content file' target='_blank' class='docLink' [href]='getSourceUrl()'>\n        <div class='titleText'>Leia a bula completa aqui</div>\n      </a>\n    </div>\n  </div>\n    "
+                        template: "\n  <div>\n      <div title='View detailed Content' (click)='toggle(!isExpand)' class='docBody'>\n        <div class='docBodyTitle' [innerHtml]='getTitle()'></div>\n        <div class='docBodySnippet' [innerHtml]='getHighlighting()'></div>\n      </div>\n      <div class ='modal' [hidden]='isExpand'>\n      <div class='modal-header'><div [innerHtml]='getTitle()' class='modal-doc'></div>\n        <span class='modal-close' (click)='toggle(!isExpand)'>\n        <img src='../img/close-button.png' class='close-button'></span>\n      </div>\n      <div class='modalDocTitle'>\n        <a title='View content file' target='_blank' class='docLink' [href]='getSourceUrl()'>\n          <div class='titleText'>Leia a bula completa aqui</div>\n        </a>\n      </div>\n      <div class='bodyText' [innerHtml]='getBody()'></div>\n      <div class='disclaimer'>Estamos limitando o texto para retornar apenas 2 par\u00E1grafos do resultado completo.</div>\n    </div>\n    <div class='docTitle'>\n      <a title='View content file' target='_blank' class='docLink' [href]='getSourceUrl()'>\n        <div class='titleText'>Leia a bula completa aqui</div>\n      </a>\n    </div>\n  </div>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], CeDocComponent);

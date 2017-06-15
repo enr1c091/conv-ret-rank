@@ -9,7 +9,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License
  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
  * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
+ * the License.e’re demonstrating text limiting using only two paragraphs of the full article.
+       You can turn this off for your own application
  */
 import {Component} from 'angular2/core';
 
@@ -37,8 +38,7 @@ import {Component} from 'angular2/core';
         </a>
       </div>
       <div class='bodyText' [innerHtml]='getBody()'></div>
-      <div class='disclaimer'>We’re demonstrating text limiting using only two paragraphs of the full article.
-       You can turn this off for your own application.</div>
+      <div class='disclaimer'>Estamos limitando o texto para retornar apenas 2 parágrafos do resultado completo.</div>
     </div>
     <div class='docTitle'>
       <a title='View content file' target='_blank' class='docLink' [href]='getSourceUrl()'>
@@ -63,18 +63,15 @@ export class CeDocComponent {
     if (this.doc) {
       return this.doc.title;
     }
-    return 'bula_engov.pdf';
+    return '';
   }
 
   private getSourceUrl () {
-    console.log(this.doc);
-    return '';
-    /*
     if (this.doc) {
-      return this.doc.sourceUrl;
+      return 'bula_engov.pdf';
+      /*;this.doc.sourceUrl;*/
     }
     return '';
-     * */
   }
 /*
  * Displays the Solr highlighted text with a special style.

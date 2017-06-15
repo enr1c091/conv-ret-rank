@@ -27,8 +27,8 @@ import {PayloadComponent} from './payload';
   selector: 'chat-app',
   template: `
   <div id='view-change-button' class='button' (click)='togglePanel($event)'>
-    <img title='Click to Collapse' class='option full' src='../img/Chat Button.png'>
-    <img title='Click to Expand' class='option not-full' src='../img/Code Button.png'>
+    <img title='Clique para Esconder' class='option full' src='../img/Chat Button.png'>
+    <img title='Clique para Expandir' class='option not-full' src='../img/Code Button.png'>
   </div>
   <div id='parent' class='parentDiv' (window:resize)='onResize($event)'>
       <div id='scrollingChat'>
@@ -37,8 +37,8 @@ import {PayloadComponent} from './payload';
             (segment !== segments[segments.length - 1] ? "from-watson" : "from-watson-latest")'>
             <p class='padding' [innerHtml]='segment.getText()'></p>
             <div *ngIf='!segment.isUser() && segment.getCe().length>0 && segment !== segments[0]'>
-              <span title='Click to Collapse' (click)='CeToggle($event)' style='border : none;'
-              class='expcoll'>Collapse Results <span class='sign'>-</span></span>
+              <span title='Clique para Esconder' (click)='CeToggle($event)' style='border : none;'
+              class='expcoll'>Esconder Resultados<span class='sign'>-</span></span>
               <div class='toggleCe'>
                 <ce-doc *ngFor='#doc of segment.getCe()' [doc]='doc'></ce-doc>
               </div>
