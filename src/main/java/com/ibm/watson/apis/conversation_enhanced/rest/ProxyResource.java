@@ -186,7 +186,7 @@ public class ProxyResource {
     		  .execute();
     
    	System.out.println("****RESULTADO NLU");
-   	System.out.println(results);
+   	System.out.println(new Gson().toJson(results));
    	
     return response;
   }
