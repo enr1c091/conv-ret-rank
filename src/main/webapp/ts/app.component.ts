@@ -145,8 +145,6 @@ export class AppComponent {
         let activeCircle = <HTMLElement>document.querySelector ('.active-circle');
         let nactiveCircle = <HTMLElement>document.querySelector ('.non-active-circle');
         setup_status.innerHTML = setup_status_msg;
-        console.log(setup_state, setup_status);
-        console.log(data);
         if (setup_state === 'not_ready') {
           document.body.style.backgroundColor = 'darkgray';
           chat_app.style.opacity = '0.25';
