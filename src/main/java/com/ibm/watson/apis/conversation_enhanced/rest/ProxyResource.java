@@ -47,6 +47,7 @@ import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.An
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.AnalyzeOptions;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.EntitiesOptions;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.Features;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.KeywordsOptions;
 import com.ibm.watson.developer_cloud.service.exception.UnauthorizedException;
 import com.ibm.watson.developer_cloud.util.GsonSingleton;
 
@@ -168,10 +169,31 @@ public class ProxyResource {
     	  System.getenv("NLU_PASSWORD")
     );
 
-    EntitiesOptions entities = new EntitiesOptions.Builder().sentiment(true).limit(1).build();
-   	Features features = new Features.Builder().entities(entities).build();
-   	AnalyzeOptions parameters = new AnalyzeOptions.Builder().text(request.inputText()).features(features).build();
-   	AnalysisResults results = nluService.analyze(parameters).execute();
+    EntitiesOptions entitiesOptions = new EntitiesOptions.Builder()
+    		  .emotion(true)
+    		  .sentiment(true)
+    		  .limit(2)
+    		  .build();
+
+    KeywordsOptions keywordsOptions = new KeywordsOptions.Builder()
+    		  .emotion(true)
+    		  .sentiment(true)
+    		  .limit(2)
+    		  .build();
+
+    Features features = new Features.Builder()
+    		  .entities(entitiesOptions)
+    		  .keywords(keywordsOptions)
+    		  .build();
+
+    AnalyzeOptions parameters = new AnalyzeOptions.Builder()
+    		  .text(request.inputText())
+    		  .features(features)
+    		  .build();
+
+    AnalysisResults results = nluService
+    		  .analyze(parameters)
+    		  .execute();
     
    	System.out.println("****RESULTADO NLU");
    	System.out.println(results);
