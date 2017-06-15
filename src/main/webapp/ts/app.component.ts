@@ -60,7 +60,7 @@ import {PayloadComponent} from './payload';
       </div>
       <footer>
       <label for='textInput' class='inputOutline'>
-        <input id='textInput' class='input responsive-column' placeholder='Type something' type='text'
+        <input id='textInput' class='input responsive-column' placeholder='Diga algo..' type='text'
           [(ngModel)]='question' (keydown)='keypressed($event)' style='width:100%'>
       </label>
       <div class='draw'></div>
