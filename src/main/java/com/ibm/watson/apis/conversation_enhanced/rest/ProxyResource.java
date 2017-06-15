@@ -39,9 +39,9 @@ import com.ibm.watson.apis.conversation_enhanced.payload.DocumentPayload;
 import com.ibm.watson.apis.conversation_enhanced.retrieve_and_rank.Client;
 import com.ibm.watson.apis.conversation_enhanced.utils.Logging;
 import com.ibm.watson.apis.conversation_enhanced.utils.Messages;
-import com.ibm.watson.developer_cloud.conversation.v1_experimental.ConversationService;
-import com.ibm.watson.developer_cloud.conversation.v1_experimental.model.MessageRequest;
-import com.ibm.watson.developer_cloud.conversation.v1_experimental.model.MessageResponse;
+import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
+import com.ibm.watson.developer_cloud.conversation.v1.model.MessageRequest;
+import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.AnalysisResults;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.AnalyzeOptions;
@@ -114,7 +114,7 @@ public class ProxyResource {
     // Configure the Watson Developer Cloud SDK to make a call to the appropriate conversation
     // service. Specific information is obtained from the VCAP_SERVICES environment variable
     ConversationService service =
-        new ConversationService(API_VERSION != null ? API_VERSION : ConversationService.VERSION_DATE_2016_05_19);
+        new ConversationService(API_VERSION != null ? API_VERSION : ConversationService.VERSION_DATE_2017_02_03);
     if (USERNAME != null || PASSWORD != null) {
       service.setUsernameAndPassword(USERNAME, PASSWORD);
     }
@@ -173,6 +173,9 @@ public class ProxyResource {
    	AnalyzeOptions parameters = new AnalyzeOptions.Builder().text(request.inputText()).features(features).build();
    	AnalysisResults results = nluService.analyze(parameters).execute();
     
+   	System.out.println("****RESULTADO NLU");
+   	System.out.println(results);
+   	
     return response;
   }
 
