@@ -45,9 +45,8 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.AnalysisResults;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.AnalyzeOptions;
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.EntitiesOptions;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.Features;
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.KeywordsOptions;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.SentimentOptions;
 import com.ibm.watson.developer_cloud.service.exception.UnauthorizedException;
 import com.ibm.watson.developer_cloud.util.GsonSingleton;
 
@@ -169,26 +168,17 @@ public class ProxyResource {
     	  System.getenv("NLU_PASSWORD")
     );
 
-    EntitiesOptions entitiesOptions = new EntitiesOptions.Builder()
-    		  .emotion(true)
-    		  .sentiment(true)
-    		  .limit(2)
-    		  .build();
-
-    KeywordsOptions keywordsOptions = new KeywordsOptions.Builder()
-    		  .emotion(true)
-    		  .sentiment(true)
-    		  .limit(2)
+    SentimentOptions sentiment = new SentimentOptions.Builder()
     		  .build();
 
     Features features = new Features.Builder()
-    		  .entities(entitiesOptions)
-    		  .keywords(keywordsOptions)
+    		  .sentiment(sentiment)
     		  .build();
 
     AnalyzeOptions parameters = new AnalyzeOptions.Builder()
     		  .text(request.inputText())
     		  .features(features)
+    		  .language("pt")
     		  .build();
 
     AnalysisResults results = nluService
