@@ -9,11 +9,15 @@ declared-services:
   conversation-hyperm:
     label: conversation
     plan: free
+  tone-hyperm:
+    label: tone_analyzer
+    plan: lite
 applications:
 - services:
   - ret-rank-hyperm
   - doc-conv-hyperm
   - conversation-hyperm
+  - tone-hyperm
   path: build/libs/conversation-enhanced-0.1-SNAPSHOT.war
   buildpack: liberty-for-java_v3_7-20170118-2046
   memory: 512M
