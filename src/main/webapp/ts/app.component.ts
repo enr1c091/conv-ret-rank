@@ -48,7 +48,7 @@ import {PayloadComponent} from './payload';
           <div *ngIf='segment.isUser() && segment == segments[segments.length - 1]' class='load'></div>
         </div>
       </div>
-      <div class='right'> <!-- Display the payload to/from Watson -->
+      <div class='right' style="display:none"> <!-- Display the payload to/from Watson -->
         <div id='payload-column' class='fixed-column content-column'>
           <payload id='payload-request' class='payload' label='Sent to Watson' [style]='segments.length <= 2 ?
             "display : none;" : ""' [payload]='(segments.length > 1 && segments[segments.length - 2].isUser()) ?
