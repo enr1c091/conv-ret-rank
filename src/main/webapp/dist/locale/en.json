@@ -1,0 +1,19 @@
+{
+  "Collapse": "Clique aqui para Colapsar",
+  "Expand": "Clique aqui para Expandir",
+  "CResults": "Colapsar Resultados",
+  "EResults": "Expandir Resultados",
+  "Type": "Digite algo para ver o resultado",
+  "Understand": "Watson entendeu",
+  "Something": "Digite algo...",
+  "Description": "Esta aplicação mostra como utilizar diversos serviços do Watson em conjunto.",
+  "Great": "Ótima pergunta. Eu achei algumas respostas para você, espero que ajude :)",
+  "Intent": "Eu entendi que sua intenção foi ",
+  "Log": "Parece que o serviço está fora do ar :( Por favor, tente novamente após alguns instântes ou entre em contato com algum administrador",
+  "WLog": "workspace_id deve ser definido!",
+  "View": "Ver conteúdo detalhado",
+  "Content": "Ver conteúdo do arquivo",
+  "Read": "Leia o documento completo aqui",
+  "Disclaimer": "Estamos limitando o texto para retornar apenas 2 parágrafos do resultado completo.",
+  "NResponse": "Watson não responde"
+}
