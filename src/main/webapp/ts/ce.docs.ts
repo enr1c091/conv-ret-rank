@@ -33,7 +33,7 @@ import {Component} from 'angular2/core';
       </div>
       <div class='modalDocTitle'>
         <a title='View content file' target='_blank' class='docLink' [href]='getSourceUrl()'>
-          <div class='titleText'>Read the full document here</div>
+          <div class='titleText'>Leia a bula completa aqui</div>
         </a>
       </div>
       <div class='bodyText' [innerHtml]='getBody()'></div>
@@ -42,7 +42,7 @@ import {Component} from 'angular2/core';
     </div>
     <div class='docTitle'>
       <a title='View content file' target='_blank' class='docLink' [href]='getSourceUrl()'>
-        <div class='titleText'>Read the full document here</div>
+        <div class='titleText'>Leia a bula completa aqui</div>
       </a>
     </div>
   </div>
@@ -63,14 +63,18 @@ export class CeDocComponent {
     if (this.doc) {
       return this.doc.title;
     }
-    return '';
+    return 'bula_engov.pdf';
   }
 
   private getSourceUrl () {
+    console.log(this.doc);
+    return '';
+    /*
     if (this.doc) {
       return this.doc.sourceUrl;
     }
     return '';
+     * */
   }
 /*
  * Displays the Solr highlighted text with a special style.
