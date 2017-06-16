@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,7 +121,8 @@ public class ProxyResource {
 
     // Use the previously configured service object to make a call to the conversational service
     MessageResponse response = service.message(id, request).execute();
-
+    System.out.println("**RESPONSE ORIGINAL: "+ response.getOutput().get("text"));
+    
     // Determine if conversation's response is sufficient to answer the user's question or if we
     // should call the retrieve and rank service to obtain better answers
     if (response.getContext().containsKey("call_retrieve_and_rank") &&
@@ -151,10 +153,12 @@ public class ProxyResource {
     }
     
     //Colocar else para chamar NLU
-    String nluResposta = getNLUResponse(request.inputText());
-    if(!nluResposta.equals("-1")){
-    	//Atualizar o valor do output text
-    	response.getOutput().put("text", nluResposta);
+    if(!request.inputText().isEmpty()){
+    	String nluResposta = getNLUResponse(request.inputText());
+    	if(!nluResposta.equals("-1")){
+        	//Atualizar o valor do output text
+        	response.getOutput().put("text", new ArrayList<String>().add(nluResposta));
+        }
     }
 
     // Log User input and output from Watson
@@ -232,6 +236,7 @@ public class ProxyResource {
   
   private String getNLUResponse(String inputText){
 	  double sentimentScore = new NLUService().getSentimentScore(inputText);
+	  System.out.println("**Score do NLU: "+sentimentScore);
 	  if(sentimentScore > 0.5){
 		  return "Fico muito feliz de ter sido de ajuda para você :) Volte sempre que precisar!";
 	  }
