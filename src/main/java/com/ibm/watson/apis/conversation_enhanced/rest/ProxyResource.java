@@ -184,9 +184,9 @@ public class ProxyResource {
     AnalysisResults results = nluService
     		  .analyze(parameters)
     		  .execute();
-    
    	System.out.println("****RESULTADO NLU");
-   	System.out.println(new Gson().toJson(results));
+   	System.out.println(results.toString());
+   	System.out.println("SENTIMENTO: "+results.getSentiment().toString());
    	
     return response;
   }
