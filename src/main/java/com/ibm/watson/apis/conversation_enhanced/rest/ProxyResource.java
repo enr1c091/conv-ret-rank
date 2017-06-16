@@ -35,6 +35,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
+import com.ibm.watson.apis.conversation_enhanced.nlu.NLUService;
 import com.ibm.watson.apis.conversation_enhanced.payload.DocumentPayload;
 import com.ibm.watson.apis.conversation_enhanced.retrieve_and_rank.Client;
 import com.ibm.watson.apis.conversation_enhanced.utils.Logging;
@@ -42,11 +43,6 @@ import com.ibm.watson.apis.conversation_enhanced.utils.Messages;
 import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageRequest;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.AnalysisResults;
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.AnalyzeOptions;
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.Features;
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.SentimentOptions;
 import com.ibm.watson.developer_cloud.service.exception.UnauthorizedException;
 import com.ibm.watson.developer_cloud.util.GsonSingleton;
 
@@ -153,41 +149,19 @@ public class ProxyResource {
         output.put("CEPayload", docs); //$NON-NLS-1$
       }
     }
+    
     //Colocar else para chamar NLU
+    String nluResposta = getNLUResponse(request.inputText());
+    if(!nluResposta.equals("-1")){
+    	//Atualizar o valor do output text
+    	response.getOutput().put("text", nluResposta);
+    }
 
     // Log User input and output from Watson
     if (Boolean.TRUE.equals(LOGGING_ENABLED)) {
       logResponse(response);
     }
 
-    
-    
-    NaturalLanguageUnderstanding nluService = new NaturalLanguageUnderstanding(
-    	  NaturalLanguageUnderstanding.VERSION_DATE_2017_02_27,
-    	  System.getenv("NLU_USERNAME"),
-    	  System.getenv("NLU_PASSWORD")
-    );
-
-    SentimentOptions sentiment = new SentimentOptions.Builder()
-    		  .build();
-
-    Features features = new Features.Builder()
-    		  .sentiment(sentiment)
-    		  .build();
-
-    AnalyzeOptions parameters = new AnalyzeOptions.Builder()
-    		  .text(request.inputText())
-    		  .features(features)
-    		  .language("pt")
-    		  .build();
-
-    AnalysisResults results = nluService
-    		  .analyze(parameters)
-    		  .execute();
-   	System.out.println("****RESULTADO NLU");
-   	System.out.println(results.toString());
-   	System.out.println("SENTIMENTO: "+results.getSentiment().toString());
-   	
     return response;
   }
 
@@ -254,6 +228,17 @@ public class ProxyResource {
     
     cloudantLogging.log(response.getInputText(), intent, confidence, entity, convoOutput, convoId,
         retrieveAndRankOutput);
+  }
+  
+  private String getNLUResponse(String inputText){
+	  double sentimentScore = new NLUService().getSentimentScore(inputText);
+	  if(sentimentScore > 0.5){
+		  return "Fico muito feliz de ter sido de ajuda para você :) Volte sempre que precisar!";
+	  }
+	  if(sentimentScore < 0){
+		  return "Sinto muito se não conseguimos te ajudar :( Por favor, ligue para (11) 4444-0000 ou envie um e-mail para ouvidoria.vip@engov.com.br e informe o código 'AXA9482CP'! Você terá um atendimento diferenciado e lhe asseguramos que faremos o possível para lhe ajudar da melhor forma :)";
+	  }
+	  return "-1";
   }
 
 }
