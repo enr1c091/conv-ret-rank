@@ -121,7 +121,6 @@ public class ProxyResource {
 
     // Use the previously configured service object to make a call to the conversational service
     MessageResponse response = service.message(id, request).execute();
-    System.out.println("**RESPONSE ORIGINAL: "+ response.getOutput().get("text"));
     
     // Determine if conversation's response is sufficient to answer the user's question or if we
     // should call the retrieve and rank service to obtain better answers
@@ -151,7 +150,7 @@ public class ProxyResource {
         output.put("CEPayload", docs); //$NON-NLS-1$
       }
     }
-    
+    /*
     //Colocar else para chamar NLU
     if(!request.inputText().isEmpty()){
     	String nluResposta = getNLUResponse(request.inputText());
@@ -160,7 +159,7 @@ public class ProxyResource {
         	response.getOutput().put("text", new ArrayList<String>().add(nluResposta));
         }
     }
-
+	*/
     // Log User input and output from Watson
     if (Boolean.TRUE.equals(LOGGING_ENABLED)) {
       logResponse(response);
@@ -210,7 +209,7 @@ public class ProxyResource {
    * 
    * This method takes in the response object and sends in to the cloudant logging class
    * 
-   * @param response
+   * @param responsegetNLUResponse
    * @throws Exception 
    */
   private void logResponse(MessageResponse response) throws Exception {
